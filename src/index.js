@@ -100,12 +100,10 @@ function returnArgumentsArray() {
 
    var newSum = bindFunction(sum, 2, 4);
 
-   console.log(newSum()) выведет 6
+   console.log(newSum()) выведет 6 q
  */
 function bindFunction(fn) {
-    let [...arr] = arguments;
-
-    return () => fn.apply( null, arr.slice(1));
+    return () => fn.apply( null, [...arguments].slice(1));
 }
 
 export {
