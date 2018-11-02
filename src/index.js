@@ -14,7 +14,7 @@
  */
 function isAllTrue(array, fn) {
     try {
-        if ( !Array.isArray(array) || array.length === 0) {
+        if ( toString.call(array) != '[object Array]' || array.length === 0) {
             throw new Error('empty array');
         } 
 
@@ -48,7 +48,7 @@ function isAllTrue(array, fn) {
  */
 function isSomeTrue(array, fn) {
     try {
-        if ( !Array.isArray(array) || array.length === 0) {
+        if ( toString.call(array) != '[object Array]' || array.length === 0) {
             throw new Error('empty array');
         } 
 
