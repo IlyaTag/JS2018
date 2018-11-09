@@ -83,16 +83,7 @@ function delegate(target, fn) {
    добавит такой обработчик кликов для указанного элемента, который вызовется только один раз и затем удалится
  */
 function once(target, fn) {
-    var i = 0,
-        fnOne= function() {
-            fn();
-            ++i;
-            if (i === 1) {
-                target.removeEventListener('click', fnOne);
-            }
-        };
-
-    target.addEventListener('click', fnOne);
+    target.addEventListener( 'click', fn, { once: true } );
     
 }
 
