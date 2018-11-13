@@ -29,17 +29,18 @@ const homeworkContainer = document.querySelector('#homework-container');
 function createDiv() {
     let newDiv = document.createElement('div');
 
-    let rgb1 = ()=> Math.round(Math.random()*255),
-        rgb2 = ()=> Math.round(Math.random()*255),
-        rgb3 = ()=> Math.round(Math.random()*255);
+    let rgb1 = () => Math.round(Math.random() * 255),
+        rgb2 = () => Math.round(Math.random() * 255),
+        rgb3 = () => Math.round(Math.random() * 255);
 
     newDiv.className = 'draggable-div';
     newDiv.style.backgroundColor = `RGB( ${rgb1()}, ${rgb2()}, ${rgb3()} )`;
-    newDiv.style.top = Math.round(Math.random()*homeworkContainer.style.height) + 'px';
-    newDiv.style.left = Math.round(Math.random()*homeworkContainer.style.width) + 'px';
-    newDiv.style.width = Math.round(Math.random()*30) + 'px';
-    newDiv.style.height = Math.round(Math.random()*30) + 'px';
+    newDiv.style.top = Math.round(Math.random() * 1000) + 'px';
+    newDiv.style.left = Math.round(Math.random() * 1000) + 'px';
+    newDiv.style.width = Math.round(Math.random(100 - 50) + 50) + 'px';
+    newDiv.style.height = Math.round(Math.random(100 - 50) + 50) + 'px';
     newDiv.draggable = 'true';
+    newDiv.style.position = 'absolute';
 
     return newDiv;
 }
@@ -53,11 +54,20 @@ function createDiv() {
    addListeners(newDiv);
  */
 function addListeners(target) {
-    return function() {
-        target.addListeners( 'dragstart', function() {
-            return;
+    let funcAdd = function() {
+        // eslint-disable-next-line no-empty-function
+        target.addEventListener('dragstart', function() {
+
+        });
+
+        target.addEventListener('dragend', function(e) {
+            target.style.position = 'absolute';
+            target.style.left = e.x - target.offsetWidth / 2 + 'px';
+            target.style.top = e.y - target.offsetHeight / 2 + 'px';
         });
     };
+
+    return funcAdd();
 }
 
 let addDivButton = homeworkContainer.querySelector('#addDiv');
