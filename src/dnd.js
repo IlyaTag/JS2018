@@ -31,12 +31,11 @@ function createDiv() {
         rgb2 = () => Math.round(Math.random() * 255),
         rgb3 = () => Math.round(Math.random() * 255);
 
-    newDiv.className = 'draggable-div';
     newDiv.style.backgroundColor = `RGB( ${rgb1()}, ${rgb2()}, ${rgb3()} )`;
     newDiv.style.top = Math.round(Math.random() * 1000) + 'px';
     newDiv.style.left = Math.round(Math.random() * 1000) + 'px';
-    newDiv.style.width = Math.round(Math.random()*(100 - 50) + 50) + 'px'; 
-    newDiv.style.height = Math.round(Math.random()*(100 - 50) + 50) + 'px';
+    newDiv.style.width = Math.round(Math.random() * (100 - 50) + 50) + 'px';
+    newDiv.style.height = Math.round(Math.random() * (100 - 50) + 50) + 'px';
     newDiv.draggable = 'true';
     newDiv.style.position = 'absolute';
 
@@ -50,18 +49,44 @@ function createDiv() {
    homeworkContainer.appendChild(newDiv);
    addListeners(newDiv);
  */
+
 function addListeners(target) {
+
     let funcAdd = function() {
-        // eslint-disable-next-line no-empty-function
-        target.addEventListener('dragstart', function() {
 
-        });
+        function pageOffset() {
+            return {
+                x: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
+                y: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+            };
+        }
 
-        target.addEventListener('dragend', function(e) {
-            target.style.position = 'absolute';
-            target.style.left = e.x - target.offsetWidth / 2 + 'px';
-            target.style.top = e.y - target.offsetHeight / 2 + 'px';
-        });
+        var dX,
+            dY;
+
+        target.addEventListener('dragstart', function(e) {
+            if (e.which == 1) {
+                target.className = 'draggable-div';
+                e.dataTransfer.setData('text', e.target.className);
+                dX = e.clientX + pageOffset().x - target.offsetLeft;
+                dY = e.clientY + pageOffset().y - target.offsetTop;
+            }
+        })
+
+        document.addEventListener('dragover', function(e) {
+            e.preventDefault();
+        })
+
+        document.addEventListener('drop', function(e) {
+            e.preventDefault();
+            // eslint-disable-next-line no-empty
+            if (target.className === 'draggable-div') {
+                target.style.left = e.clientX + pageOffset().x - dX + 'px';
+                target.style.top = e.clientY + pageOffset().y - dY + 'px';
+                target.classList.toggle('draggable-div');
+
+            }
+        })
     };
 
     return funcAdd();
